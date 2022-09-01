@@ -1,0 +1,57 @@
+﻿@using System.Globalization
+@model TransacaoModel
+@{
+    ViewData["Title"] = "Relatório de Transações por Período";
+
+    var vDataInicio = string.Empty;
+    var vDataFim = string.Empty;
+}
+
+
+<h3>Relatório de Transações por Período</h3>
+<hr />
+
+<div class="mb-3">
+    <form asp-controller="Relatorio" asp-action="Filtrar"> 
+
+        <label>Data:</label>
+        <input type="date" class="form-control" asp-for="DataInicio" value=@vDataInicio />
+        <span asp-validation-for="Data" class="text-danger"></span>    
+
+        <label>a</label>
+        
+        <input type="date" class="form-control" asp-for="DataFim" value=@vDataFim />
+        <span asp-validation-for="Data" class="text-danger"></span>        
+
+        <button type="submit" class="btn btn-block btn-primary" 
+        @* asp-controller="Relatorio" asp-action="Filtrar" *@
+        @* onclick="Filtrar(@vDataInicio,@vDataFim)">Filtrar*@
+        </button> 
+
+    </form>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th width="17%">Data</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Descrição</th>
+        <th>Plano de Contas</th>
+    </tr>
+    @{
+        foreach (var item in (List<TransacaoModel>)ViewBag.Lista)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Data</td>
+                <td>@item.Valor</td>
+                <td>@item.Tipo</td>
+                <td>@item.Historico</td>
+                <td>@item.IdPlanoConta</td>
+            </tr>
+        }
+    }
+</table>
+

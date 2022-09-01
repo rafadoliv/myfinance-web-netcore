@@ -90,5 +90,33 @@ namespace myfinance_web_netcore.Domain
             return transaction;
         }
 
+        public List<TransacaoModel> RelatorioTransacaoPorData(String dataInicio, String dataFim)
+        {
+          List<TransacaoModel> lista = new List<TransacaoModel>();
+          var objDal = DAL.GetInstancia;
+          objDal.Conectar();
+
+          var sql = $"SELECT ID, DATA, TIPO, VALOR, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO WHERE DATA >= '{dataInicio}' AND DATA <= '{dataFim}'";
+
+          var dataTable = objDal.RetornarDataTable(sql);
+
+          for (int i = 0; i < dataTable.Rows.Count; i++)
+          {
+            lista.Add(new TransacaoModel()
+                    {
+                    Id = int.Parse(dataTable.Rows[i]["id"].ToString()),
+                    Data = Convert.ToDateTime(dataTable.Rows[i]["data"].ToString()),
+                    Valor = Convert.ToDecimal(dataTable.Rows[i]["valor"]),
+                    Tipo = dataTable.Rows[i]["tipo"].ToString(),
+                    Historico = dataTable.Rows[i]["historico"].ToString(),
+                    IdPlanoConta = Convert.ToInt32(dataTable.Rows[i]["id_plano_conta"])
+                    }
+                );
+          }
+
+          objDal.Desconectar();       
+
+          return lista;
+        }  
     }
 }

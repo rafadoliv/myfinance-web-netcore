@@ -8,5 +8,8 @@
         public string? Historico { get; set; }
         public string? Tipo { get; set; }
         public int IdPlanoConta { get; set; }
+
+        public DateTime? DataInicio { get; set; }
+        public DateTime? DataFim { get; set; }
     }
 }
