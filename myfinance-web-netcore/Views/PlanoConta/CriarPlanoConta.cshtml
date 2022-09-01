@@ -1,0 +1,34 @@
+﻿@model PlanoContaModel
+@{
+    ViewData["Title"] = "Criar Plano de Conta";
+
+    var vDescricao = string.Empty;
+    var vTipo = string.Empty;
+
+    try
+    {
+        vDescricao = @ViewBag.PlanoConta.Descricao;
+        vTipo = @ViewBag.PlanoConta.Tipo.ToString().Trim();
+    }
+    catch { };
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="PlanoConta" asp-action="CriarPlanoConta"> 
+    
+<input type="text" asp-for="Descricao"><br>
+
+  <label for="lname">Tipo:</label><br>
+  <input type="radio" name="Tipo" value="C"/> Credito<br />
+  <input type="radio" name="Tipo" value="D"/> Debito<br />
+  <button type="submit" class="btn btn-block btn-success">Salvar</button>
+  <input type="button" class="btn btn-block btn-danger" onclick="Cancelar()" value="Cancelar" />
+
+</form>
+
+<script>
+    function Cancelar(){
+        window.location.href = "/PlanoConta";
+    }
+</script>
