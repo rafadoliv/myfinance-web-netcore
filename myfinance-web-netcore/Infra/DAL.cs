@@ -1,63 +1,64 @@
-﻿using System.Data;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Data;
 
 namespace myfinance_web_netcore.Infra
 {
     public class DAL
     {
         private SqlConnection conn;
+
         private string connectionString;
-        public static IConfiguration? configuration;
+
+        public static IConfiguration? Configuration;
+
         private static DAL Instancia;
 
         public static DAL GetInstancia
         {
-            get
-            {
-                if (Instancia == null) { Instancia = new(); }
+            get{
+                if (Instancia == null)
+                    Instancia = new();
+
                 return Instancia;
             }
         }
 
-        public DAL()
+        private DAL()
         {
-            connectionString = configuration.GetValue<string>("ConnectionString");
+            connectionString = Configuration.GetValue<string>("ConnectionString");
         }
 
-        public void Conectar()
+        public void Connectar()
         {
             conn = new();
             conn.ConnectionString = connectionString;
             conn.Open();
         }
 
-        public void Desconectar()
+        public void Desconnectar()
         {
             conn.Close();
-        }
+        }        
 
-        /// <summary>
-        /// Select
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        //SELECT
         public DataTable RetornarDataTable(string sql)
         {
             var dataTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(sql , conn);
-            adapter.Fill(dataTable);
+            SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+            da.Fill(dataTable);
             return dataTable;
         }
 
-        /// <summary>
-        /// INSERT, UPDATE, DELETE
-        /// </summary>
-        /// <param name="sql"></param>
+        //INSERT, UPDATE, DELETE
         public void ExecutarComandoSQL(string sql)
         {
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.ExecuteNonQuery();
-        }
+            SqlCommand comando = new SqlCommand(sql, conn);
+            comando.ExecuteNonQuery();
 
+        }
     }
 }

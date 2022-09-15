@@ -30,13 +30,10 @@ CriaInstanciaDAL(app);
 
 app.Run();
 
-
 void CriaInstanciaDAL(WebApplication app)
 {
     IConfiguration configuration = app.Configuration;
-    DAL.configuration = configuration;
-
-    var objDAL = DAL.GetInstancia;
-    objDAL.Conectar();
-    
+    DAL.Configuration = configuration;
+    //var objDAL = DAL.GetInstancia;
+    //objDAL.Connectar();
 }

@@ -15,16 +15,51 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="PlanoConta" asp-action="CriarPlanoConta"> 
-    
-<input type="text" asp-for="Descricao"><br>
+<form asp-controller="PlanoConta" asp-action="CriarPlanoConta">
+    <input type="hidden" asp-for="Id" readonly /><br />
 
-  <label for="lname">Tipo:</label><br>
-  <input type="radio" name="Tipo" value="C"/> Credito<br />
-  <input type="radio" name="Tipo" value="D"/> Debito<br />
-  <button type="submit" class="btn btn-block btn-success">Salvar</button>
-  <input type="button" class="btn btn-block btn-danger" onclick="Cancelar()" value="Cancelar" />
+    <div class="row form-group mb-3">
+        <div class="col-lg-9">
+            <label for="descricao">Descrição:</label>
+            <input type="text" class="form-control" asp-for="Descricao" value=@vDescricao />
+        </div>
 
+        <div class="col-lg-3">
+            <label>Tipo:</label>
+            <div class="form-check">
+                <label class="form-check-label">
+                    @{
+                        if (@vTipo == "C")
+                        {
+                            <input asp-for="Tipo" type="radio" class="form-check-input" value="C" checked />
+                        }
+                        else
+                        {
+                            <input asp-for="Tipo" type="radio" class="form-check-input" value="C" />
+                        }
+                    } Credito
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    @{
+                        if (@vTipo == "D")
+                        {
+                            <input type="radio" class="form-check-input" asp-for="Tipo" value="D" checked>
+                        }
+                        else
+                        {
+                            <input type="radio" class="form-check-input" asp-for="Tipo" value="D">
+                        }
+                    }
+                    Despesa
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+    <input type="button" class="btn btn-block btn-danger" onclick="Cancelar()" value="Cancelar" />
 </form>
 
 <script>
